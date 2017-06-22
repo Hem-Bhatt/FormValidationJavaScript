@@ -256,12 +256,12 @@ $('#myForm').submit(function(e) {    //Submit Event Handler on the FORM!
                 e.preventDefault();
               }
               else if(!(zip.val().length==5)){                  //zip is not of appropriate length
-                alert("Zip number should be of length 5")
+                alert("Zip number must be of length 5")
                 zip.focus();
                 e.preventDefault();
               }
               else if(!(cvv.val().length==3)){
-                alert("CC number should be of length 3")                // cvv is not of appropriate length
+                alert("CVV number must be of length 3")                // cvv is not of appropriate length
                 cvv.focus();
                 e.preventDefault();
               }
