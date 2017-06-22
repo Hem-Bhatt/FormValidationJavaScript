@@ -109,11 +109,8 @@ activities.appendChild(span);
 span.id = "tempspan"
 const selectSpan = $('#tempspan');
 selectSpan.hide();
-//selecting all the classes for activities
 
-
-
-activities.addEventListener('change',(e)=>{
+activities.addEventListener('change',(e)=>{   // Event listener on activities to calculate total cost
     if(e.target.name=="all")
     {
       if(e.target.checked)
@@ -186,7 +183,7 @@ activities.addEventListener('change',(e)=>{
 });
 
 
-//task5
+//task5 Hiding & showing the required Div elements according to the selected payment process
 creditcard.hide();
 bitcoin.hide();
 paypal.hide();
@@ -208,7 +205,7 @@ payment.addEventListener('change',(e)=>{
 });
 
 
-//task6
+//task6 Form validation !!
 
 const ccnumber = $("#cc-num");
 const zip=$("#zip");
