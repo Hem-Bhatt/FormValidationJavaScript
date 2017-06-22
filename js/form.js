@@ -54,6 +54,12 @@ function remove(number)
         selectSpan.show();
       }
 }
+
+function hideAndShow(v1,v2,v3){
+    v1.show();
+    v2.hide();
+    v3.hide();
+}
 //task1
 
 textFieldOne.focus();
@@ -186,19 +192,13 @@ bitcoin.hide();
 paypal.hide();
 payment.addEventListener('change',(e)=>{
   if(e.target.value=="credit card"){
-    creditcard.show();
-    bitcoin.hide();
-    paypal.hide();
+    hideAndShow(creditcard,bitcoin,paypal);
   }
   else if (e.target.value=="paypal") {
-    creditcard.hide();
-    bitcoin.hide();
-    paypal.show();
+    hideAndShow(paypal,creditcard,bitcoin);
   }
   else if (e.target.value=="bitcoin"){
-    creditcard.hide();
-    bitcoin.show();
-    paypal.hide();
+    hideAndShow(bitcoin,creditcard,paypal);
   }
   else{
     creditcard.hide();
@@ -209,47 +209,77 @@ payment.addEventListener('change',(e)=>{
 
 
 //task6
+
 const ccnumber = $("#cc-num");
 const zip=$("#zip");
 const cvv = $("#cvv");
-$('#myForm').submit(function(e) {
-     // to stop the form from submitting
+$('#myForm').submit(function(e) {    //Submit Event Handler on the FORM!
+
      if(adder==0)
      {
        alert("Please Register for atleast one activity!!!!");
+       const legend = document.querySelector("#legend1");
+       legend.style.color = "red"
+       legend.focus();
        e.preventDefault();
      }
     if(payment.value=="select_method")
     {
       alert("Please Select a Payment Method!!");
+      payment.focus();
       e.preventDefault();
     }
 
     else if(adder!=0)
     {
       if(payment.value=="credit card"){
-      if(!((isNaN(ccnumber.val())) && isNaN(zip.val()) && isNaN(cvv.val())))
-      {
-        if((12 < ccnumber.val().length <17)&&(zip.val().length==5)&&(cvv.val().length==3))
-        {
-            this.submit();
+        if(isNaN(ccnumber.val())){                // If CC is not a number
+            alert("CC is not a number")
+            ccnumber.focus();
+            e.preventDefault();
+          }
+        else if (isNaN(zip.val())) {       // IF Zip code is not a number
+          alert("ZIP is not a number")
+          zip.focus();
+          e.preventDefault();
         }
-            else{
+        else if (isNaN(cvv.val())) {        // If CVV is not a number
+          alert("CVV is not a number");
+          cvv.focus();
+          e.preventDefault();
+        }
+        else   // If all are numbers
+          {
+              if(!(((ccnumber.val().length < 17))&&(ccnumber.val().length>12))){     // cc number is not of appropriate length
+                alert("CC number should have length of 13-16");
+                ccnumber.focus();
+                e.preventDefault();
+              }
+              else if(!(zip.val().length==5)){                  //zip is not of appropriate length
+                alert("Zip number should be of length 5")
+                zip.focus();
+                e.preventDefault();
+              }
+              else if(!(cvv.val().length==3)){
+                alert("CC number should be of length 3")                // cvv is not of appropriate length
+                cvv.focus();
+                e.preventDefault();
+              }
+              else
+              {
+                  this.submit();
+                  document.write("<h1> YOUR FORM IS SUBMITTED!!");
+                  }
 
-          alert("Please Enter a 13 to 16-digit credit card number, a 5-digit zip code, and 3-number CVV value");
-          e.preventDefault();
-        }
-      }
-      else {
-          alert("Please Enter Numerical Data for the Field!")
-          e.preventDefault();
-      }
+            }
+
     }
         else{
           this.submit();
-
+          document.write("<h1> YOUR FORM IS SUBMITTED!!"); 
+          // If all the validations succeeded
     }
   }
 
-      // If all the validations succeeded
+      
 });
