@@ -18,9 +18,14 @@ const oneTo4 = $(".1to4t");
 const creditcard = $("#credit-card");
 const bitcoin = $("#bitcoin");
 const paypal = $("#paypal");
-
+const email = $("#mail");
+const name = $("#name");
 // const activities = $(".activities");
 
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
 
 function hideInputElement()
 {
@@ -211,7 +216,8 @@ const ccnumber = $("#cc-num");
 const zip=$("#zip");
 const cvv = $("#cvv");
 $('#myForm').submit(function(e) {    //Submit Event Handler on the FORM!
-
+if(name.val()!==""){
+  if(validateEmail(email.val())){
      if(adder==0)
      {
        alert("Please Register for atleast one activity!!!!");
@@ -220,10 +226,12 @@ $('#myForm').submit(function(e) {    //Submit Event Handler on the FORM!
        legend.focus();
        e.preventDefault();
      }
+    else{
     if(payment.value=="select_method")
     {
       alert("Please Select a Payment Method!!");
       payment.focus();
+      payment.previousElementSibling.style.color = "red"
       e.preventDefault();
     }
 
@@ -233,16 +241,19 @@ $('#myForm').submit(function(e) {    //Submit Event Handler on the FORM!
         if(isNaN(ccnumber.val())){                // If CC is not a number
             alert("CC is not a number")
             ccnumber.focus();
+            ccnumber.prev().css('color','red');
             e.preventDefault();
           }
         else if (isNaN(zip.val())) {       // IF Zip code is not a number
           alert("ZIP is not a number")
           zip.focus();
+          zip.prev().css('color','red');
           e.preventDefault();
         }
         else if (isNaN(cvv.val())) {        // If CVV is not a number
           alert("CVV is not a number");
           cvv.focus();
+          cvv.prev().css('color','red');
           e.preventDefault();
         }
         else   // If all are numbers
@@ -250,16 +261,19 @@ $('#myForm').submit(function(e) {    //Submit Event Handler on the FORM!
               if(!(((ccnumber.val().length < 17))&&(ccnumber.val().length>12))){     // cc number is not of appropriate length
                 alert("CC number should have length of 13-16");
                 ccnumber.focus();
+                ccnumber.prev().css('color','red');
                 e.preventDefault();
               }
               else if(!(zip.val().length==5)){                  //zip is not of appropriate length
                 alert("Zip number must be of length 5")
                 zip.focus();
+                zip.prev().css('color','red');
                 e.preventDefault();
               }
               else if(!(cvv.val().length==3)){
                 alert("CVV number must be of length 3")                // cvv is not of appropriate length
                 cvv.focus();
+                cvv.prev().css('color','red');
                 e.preventDefault();
               }
               else
@@ -273,10 +287,24 @@ $('#myForm').submit(function(e) {    //Submit Event Handler on the FORM!
     }
         else{
           this.submit();
-          document.write("<h1> YOUR FORM IS SUBMITTED!!"); 
+          document.write("<h1> YOUR FORM IS SUBMITTED!!");
           // If all the validations succeeded
     }
   }
+}
+}
+else{
+  e.preventDefault();
+  alert("Please Enter a Valid Email address");
+  email.focus();
+  email.prev().css('color','red')
+    }
+  }
 
-      
+else{
+  e.preventDefault();
+  alert("Please Enter a Name");
+  name.focus();
+  name.prev().css('color','red')
+}
 });
