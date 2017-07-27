@@ -1,2 +1,2 @@
 # FormValidationJavaScript
-Form validation using javaScript, CSS &amp; HTML5
+Form validation using jQuery, CSS & HTML5 without any external jquery plugin.
