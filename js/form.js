@@ -262,7 +262,7 @@ if(adder!=0)
           scrolltop();
          }
          if(!(cvv.val().length==3)){
-           errors += `<div style="color:red">should be 5 digits long</div>`;
+           errors += `<div style="color:red">CVV should be 3 digits long</div>`;
            e.preventDefault();
            scrolltop();
          }
