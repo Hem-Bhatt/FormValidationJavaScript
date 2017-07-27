@@ -1,4 +1,3 @@
-
 //Selecting the Necessary DOM elements
 const textFieldOne = document.querySelector("#name");
 const JobRole = document.querySelector("select#title");
@@ -20,42 +19,40 @@ const bitcoin = $("#bitcoin");
 const paypal = $("#paypal");
 const email = $("#mail");
 const name = $("#name");
+const div = document.createElement('div');
 // const activities = $(".activities");
+function scrolltop(){
+  $('html, body').animate({ scrollTop: 0 }, 'fast');
+}
 
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
 
-function hideInputElement()
-{
+function hideInputElement(){
   br.hide();
   input.hide();
 }
 
-function showInputElement()
-{
+function showInputElement(){
   br.show();
   input.show();
 }
 
-function add(number)
-{
+function add(number){
   adder +=number;
   selectSpan.html('Total: $'+adder);
   selectSpan.show();
 }
 
-function remove(number)
-{
+function remove(number){
   adder -=number;
   selectSpan.html('Total: $'+adder);
-  if(adder==0)
-      {
+  if(adder==0){
         selectSpan.hide();
       }
-  else
-      {
+  else{
         selectSpan.show();
       }
 }
@@ -116,19 +113,15 @@ const selectSpan = $('#tempspan');
 selectSpan.hide();
 
 activities.addEventListener('change',(e)=>{   // Event listener on activities to calculate total cost
-    if(e.target.name=="all")
-    {
-      if(e.target.checked)
-      {
+    if(e.target.name=="all"){
+      if(e.target.checked){
         add(200);
       }
-      else
-      {
+      else{
         remove(200);
       }
     }
-    else if (e.target.name=="js-frameworks" || e.target.name=="express")
-    {
+    else if (e.target.name=="js-frameworks" || e.target.name=="express"){
       if(e.target.checked)
       {
       add(100);
@@ -156,8 +149,7 @@ activities.addEventListener('change',(e)=>{   // Event listener on activities to
       {
       add(100);
         for(let i=0;i<oneTo4.length;i+=1){
-          if(e.target !== oneTo4[i])
-          {
+          if(e.target !== oneTo4[i]){
           oneTo4[i].disabled = true;
           oneTo4[i].style.color = "grey";
           }
@@ -176,12 +168,10 @@ activities.addEventListener('change',(e)=>{   // Event listener on activities to
         }
       }
     else {
-      if(e.target.checked)
-      {
+      if(e.target.checked){
         add(100);
       }
-      else
-      {
+      else{
         remove(100);
       }
     }
@@ -211,100 +201,80 @@ payment.addEventListener('change',(e)=>{
 
 
 //task6 Form validation !!
-
 const ccnumber = $("#cc-num");
 const zip=$("#zip");
 const cvv = $("#cvv");
+
 $('#myForm').submit(function(e) {    //Submit Event Handler on the FORM!
-if(name.val()!==""){
-  if(validateEmail(email.val())){
-     if(adder==0)
-     {
-       alert("Please Register for atleast one activity!!!!");
-       const legend = document.querySelector("#legend1");
-       legend.style.color = "red"
-       legend.focus();
-       e.preventDefault();
-     }
-    else{
-    if(payment.value=="select_method")
-    {
-      alert("Please Select a Payment Method!!");
-      payment.focus();
-      payment.previousElementSibling.style.color = "red"
-      e.preventDefault();
-    }
+  $('#errors').remove();
+let errors = "<div id='errors'>";
 
-    else if(adder!=0)
-    {
-      if(payment.value=="credit card"){
-        if(isNaN(ccnumber.val())){                // If CC is not a number
-            alert("CC is not a number")
-            ccnumber.focus();
-            ccnumber.prev().css('color','red');
-            e.preventDefault();
-          }
-        else if (isNaN(zip.val())) {       // IF Zip code is not a number
-          alert("ZIP is not a number")
-          zip.focus();
-          zip.prev().css('color','red');
-          e.preventDefault();
-        }
-        else if (isNaN(cvv.val())) {        // If CVV is not a number
-          alert("CVV is not a number");
-          cvv.focus();
-          cvv.prev().css('color','red');
-          e.preventDefault();
-        }
-        else   // If all are numbers
-          {
-              if(!(((ccnumber.val().length < 17))&&(ccnumber.val().length>12))){     // cc number is not of appropriate length
-                alert("CC number should have length of 13-16");
-                ccnumber.focus();
-                ccnumber.prev().css('color','red');
-                e.preventDefault();
-              }
-              else if(!(zip.val().length==5)){                  //zip is not of appropriate length
-                alert("Zip number must be of length 5")
-                zip.focus();
-                zip.prev().css('color','red');
-                e.preventDefault();
-              }
-              else if(!(cvv.val().length==3)){
-                alert("CVV number must be of length 3")                // cvv is not of appropriate length
-                cvv.focus();
-                cvv.prev().css('color','red');
-                e.preventDefault();
-              }
-              else
-              {
-                  this.submit();
-                  document.write("<h1> YOUR FORM IS SUBMITTED!!");
-                  }
-
-            }
-
-    }
-        else{
-          this.submit();
-          document.write("<h1> YOUR FORM IS SUBMITTED!!");
-          // If all the validations succeeded
-    }
-  }
-}
-}
-else{
+if(name.val()===""){
+  console.log("NO NAME");
+  errors += `<div style="color:red">Name is required</div>`;
   e.preventDefault();
-  alert("Please Enter a Valid Email address");
-  email.focus();
-  email.prev().css('color','red')
-    }
-  }
-
-else{
-  e.preventDefault();
-  alert("Please Enter a Name");
-  name.focus();
-  name.prev().css('color','red')
+  scrolltop();
 }
+
+if(!validateEmail(email.val())){
+  errors += `<div style="color:red">Please Enter an acceptable email id</div>`;
+  e.preventDefault();
+  scrolltop();
+}
+
+if(adder==0){
+  errors += `<div style="color:red">Please Register for atleast 1 activity</div>`;
+  e.preventDefault();
+  scrolltop();
+}
+
+if(payment.value=="select_method"){
+  errors += `<div style="color:red">Please Select a Payment method</div>`;
+  e.preventDefault();
+  scrolltop();
+}
+if(adder!=0)
+  {
+    if(payment.value=="credit card"){
+       if(isNaN(ccnumber.val()) || ccnumber.val()==""){                // If CC is not a number
+         errors += `<div style="color:red">Credit Card is not a number</div>`;
+         e.preventDefault();
+         scrolltop();
+        }
+       if(isNaN(zip.val())) {       // IF Zip code is not a number
+         errors += `<div style="color:red">Zip Code is not a number</div>`;
+         e.preventDefault();
+         scrolltop();
+        }
+       if(isNaN(cvv.val())) {        // If CVV is not a number
+         errors += `<div style="color:red">CVV is not a number</div>`;
+         e.preventDefault();
+         scrolltop();
+        }
+        if(!(((ccnumber.val().length < 17))&&(ccnumber.val().length>12))){     // cc number is not of appropriate length
+          errors += `<div style="color:red">CVV number should be of length 13-16</div>`;
+          e.preventDefault();
+          scrolltop();
+        }
+        if(!(zip.val().length==5)){                  //zip is not of appropriate length
+          errors += `<div style="color:red">ZIP Code should be 5 digits long</div>`;
+          e.preventDefault();
+          scrolltop();
+         }
+         if(!(cvv.val().length==3)){
+           errors += `<div style="color:red">should be 5 digits long</div>`;
+           e.preventDefault();
+           scrolltop();
+         }
+      }
+    }
+errors += '</div>';
+$(errors).insertBefore('fieldset:first');
+
+if (errors == "<div id='errors'></div>"){   //If there are no errors in the form
+    this.submit();
+    document.write("<h1> YOUR FORM IS SUBMITTED!!");
+      // If all the validations succeeded
+}
+
 });
